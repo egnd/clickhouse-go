@@ -102,10 +102,10 @@ func (o *stdConnOpener) Connect(ctx context.Context) (_ driver.Conn, err error) 
 	return nil, err
 }
 
-func init() {
-	var debugf = func(format string, v ...interface{}) {}
-	sql.Register("clickhouse", &stdDriver{debugf: debugf})
-}
+// func init() {
+// 	var debugf = func(format string, v ...interface{}) {}
+// 	sql.Register("clickhouse", &stdDriver{debugf: debugf})
+// }
 
 // isConnBrokenError returns true if the error class indicates that the
 // db connection is no longer usable and should be marked bad
