@@ -5,13 +5,13 @@ go 1.18
 require (
 	github.com/ClickHouse/ch-go v0.52.1
 	github.com/ClickHouse/clickhouse-go v1.5.4
-	github.com/andybalholm/brotli v1.0.4
+	github.com/andybalholm/brotli v1.0.5
 	github.com/docker/docker v20.10.22+incompatible
 	github.com/docker/go-connections v0.4.0
 	github.com/docker/go-units v0.5.0
 	github.com/google/uuid v1.3.0
 	github.com/mkevac/debugcharts v0.0.0-20191222103121-ae1c48aa8615
-	github.com/paulmach/orb v0.8.0
+	github.com/paulmach/orb v0.9.0
 	github.com/pkg/errors v0.9.1
 	github.com/satori/go.uuid v1.2.0
 	github.com/shopspring/decimal v1.3.1
@@ -58,8 +58,8 @@ require (
 	github.com/tklauser/numcpus v0.4.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
-	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
+	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
 	google.golang.org/genproto v0.0.0-20220617124728-180714bec0ad // indirect
 	google.golang.org/grpc v1.47.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
