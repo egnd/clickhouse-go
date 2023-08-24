@@ -15,38 +15,49 @@
 // specific language governing permissions and limitations
 // under the License.
 
-package issues
+package tests
 
 import (
 	"context"
 	"github.com/ClickHouse/clickhouse-go/v2"
-	clickhouse_tests "github.com/ClickHouse/clickhouse-go/v2/tests"
 	"github.com/stretchr/testify/require"
 	"testing"
-	"time"
 )
 
-func Test957(t *testing.T) {
-	// given
+func TestBoolUInt8(t *testing.T) {
 	ctx := context.Background()
-	testEnv, err := clickhouse_tests.GetTestEnvironment(testSet)
+
+	conn, err := GetNativeConnection(clickhouse.Settings{
+		"max_execution_time": 60,
+	}, nil, &clickhouse.Compression{
+		Method: clickhouse.CompressionLZ4,
+	})
 	require.NoError(t, err)
 
-	// when the client is configured to use the test environment
-	opts := clickhouse_tests.ClientOptionsFromEnv(testEnv, clickhouse.Settings{})
-	// and the client is configured to have only 1 connection
-	opts.MaxIdleConns = 2
-	opts.MaxOpenConns = 1
-	// and the client is configured to have a connection lifetime of 1/10 of a second
-	opts.ConnMaxLifetime = time.Second / 10
-	conn, err := clickhouse.Open(&opts)
+	const ddl = `
+			CREATE TABLE IF NOT EXISTS issue_1050 (
+				  Col1 UInt8
+				, Col2 UInt8                   
+			) Engine MergeTree() ORDER BY tuple()
+		`
+	require.NoError(t, conn.Exec(ctx, ddl))
+	defer func() {
+		require.NoError(t, conn.Exec(ctx, "DROP TABLE IF EXISTS issue_1050"))
+	}()
+
+	batch, err := conn.PrepareBatch(ctx, "INSERT INTO issue_1050 (Col1, Col2)")
+	require.NoError(t, err)
+	require.NoError(t, batch.Append(true, false))
+	require.NoError(t, batch.Send())
+
+	row := conn.QueryRow(ctx, "SELECT Col1, Col2 from issue_1050")
 	require.NoError(t, err)
 
-	// then the client should be able to execute queries for 1 second
-	deadline := time.Now().Add(time.Second)
-	for time.Now().Before(deadline) {
-		rows, err := conn.Query(ctx, "SELECT 1")
-		require.NoError(t, err)
-		rows.Close()
-	}
+	var (
+		col1 bool
+		col2 bool
+	)
+	require.NoError(t, row.Scan(&col1, &col2))
+	require.True(t, col1)
+	require.False(t, col2)
 }

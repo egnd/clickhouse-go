@@ -25,16 +25,19 @@ import (
 	"context"
 	"database/sql/driver"
 	"fmt"
-	"github.com/ClickHouse/clickhouse-go/v2/resources"
 	"io"
 	"io/ioutil"
+	"log"
 	"mime/multipart"
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/ClickHouse/clickhouse-go/v2/resources"
 
 	"github.com/ClickHouse/ch-go/compress"
 	chproto "github.com/ClickHouse/ch-go/proto"
@@ -135,6 +138,15 @@ func (rw *HTTPReaderWriter) reset(pw *io.PipeWriter) io.WriteCloser {
 }
 
 func dialHttp(ctx context.Context, addr string, num int, opt *Options) (*httpConnect, error) {
+	var debugf = func(format string, v ...any) {}
+	if opt.Debug {
+		if opt.Debugf != nil {
+			debugf = opt.Debugf
+		} else {
+			debugf = log.New(os.Stdout, fmt.Sprintf("[clickhouse][conn=%d][%s]", num, addr), 0).Printf
+		}
+	}
+
 	if opt.scheme == "" {
 		switch opt.Protocol {
 		case HTTP:
@@ -202,13 +214,18 @@ func dialHttp(ctx context.Context, addr string, num int, opt *Options) (*httpCon
 	t := &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
 		DialContext: (&net.Dialer{
-			Timeout:   opt.DialTimeout,
-			KeepAlive: opt.ConnMaxLifetime,
+			Timeout: opt.DialTimeout,
 		}).DialContext,
 		MaxIdleConns:          1,
 		IdleConnTimeout:       opt.ConnMaxLifetime,
 		ResponseHeaderTimeout: opt.ReadTimeout,
 		TLSClientConfig:       opt.TLS,
+	}
+
+	if opt.DialContext != nil {
+		t.DialContext = func(ctx context.Context, network, addr string) (net.Conn, error) {
+			return opt.DialContext(ctx, addr)
+		}
 	}
 
 	conn := &httpConnect{
@@ -233,7 +250,7 @@ func dialHttp(ctx context.Context, addr string, num int, opt *Options) (*httpCon
 			return nil, err
 		}
 		if !resources.ClientMeta.IsSupportedClickHouseVersion(version) {
-			fmt.Printf("WARNING: version %v of ClickHouse is not supported by this client\n", version)
+			debugf("WARNING: version %v of ClickHouse is not supported by this client\n", version)
 		}
 	}
 

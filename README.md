@@ -34,6 +34,7 @@ The client is tested against the currently [supported versions](https://github.c
 * Connection pool
 * Failover and load balancing
 * [Bulk write support](examples/clickhouse_api/batch.go) (for `database/sql` [use](examples/std/batch.go) `begin->prepare->(in loop exec)->commit`)
+* [PrepareBatch options](#preparebatch-options)
 * [AsyncInsert](benchmark/v2/write-async/main.go) (more details in [Async insert](#async-insert) section)
 * Named and numeric placeholders support
 * LZ4/ZSTD compression support
@@ -202,7 +203,7 @@ conn := clickhouse.OpenDB(&clickhouse.Options{
 	Compression: &clickhouse.Compression{
 		Method: clickhouse.CompressionLZ4,
 	},
-	Interface: clickhouse.HttpInterface,
+	Protocol:  clickhouse.HTTP,
 })
 ```
 
@@ -253,7 +254,7 @@ conn := clickhouse.OpenDB(&clickhouse.Options{
 		Username: "default",
 		Password: "",
 	},
-	Interface: clickhouse.HttpsInterface,
+	Protocol:  clickhouse.HTTP,
 })
 ```
 
@@ -270,7 +271,7 @@ Usage examples for [native API](examples/clickhouse_api/client_info.go) and [dat
 
 ## Async insert
 
-[Asynchronous insert](https://clickhouse.com/docs/en/optimize/asynchronous-inserts#enabling-asynchronous-inserts) is supported via dedicated `InsertAsync` method. This allows to insert data with a non-blocking call.
+[Asynchronous insert](https://clickhouse.com/docs/en/optimize/asynchronous-inserts#enabling-asynchronous-inserts) is supported via dedicated `AsyncInsert` method. This allows to insert data with a non-blocking call.
 Effectively, it controls a `async_insert` setting for the query. 
 
 ### Using with batch API
@@ -280,6 +281,11 @@ Using native protocol, asynchronous insert does not support batching. It means, 
 HTTP protocol supports batching. It can be enabled by setting `async_insert` when using standard `Prepare` method.
 
 For more details please see [asynchronous inserts](https://clickhouse.com/docs/en/optimize/asynchronous-inserts#enabling-asynchronous-inserts) documentation.
+
+## PrepareBatch options
+
+Available options:
+- [WithReleaseConnection](examples/clickhouse_api/batch_release_connection.go) - after PrepareBatch connection will be returned to the pool. It can help you make a long-lived batch.
 
 ## Benchmark
 
@@ -305,6 +311,7 @@ go get -u github.com/ClickHouse/clickhouse-go/v2
 ### native interface
 
 * [batch](examples/clickhouse_api/batch.go)
+* [batch with release connection](examples/clickhouse_api/batch_release_connection.go)
 * [async insert](examples/clickhouse_api/async.go)
 * [batch struct](examples/clickhouse_api/append_struct.go)
 * [columnar](examples/clickhouse_api/columnar_insert.go)

@@ -1,3 +1,126 @@
+# v2.13.3, 2023-08-23 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Fixes 🐛
+* fix(column.json): fix bool type handling by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/1073
+
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.13.2...v2.13.3
+
+# v2.13.2, 2023-08-18 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Fixes 🐛
+* fix: update ch-go to remove string length limit by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/1071
+### Other Changes 🛠
+* Test against latest and head CH by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/1060
+
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.13.1...v2.13.2
+
+# v2.13.1, 2023-08-17 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Fixes 🐛
+* fix: native format Date32 representation by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/1069
+
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.13.0...v2.13.1
+
+# v2.13.0, 2023-08-10 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Enhancements 🎉
+* Support scan from uint8 to bool by @ValManP in https://github.com/ClickHouse/clickhouse-go/pull/1051
+* Binding arguments for AsyncInsert interface by @mdonkers in https://github.com/ClickHouse/clickhouse-go/pull/1052
+* Batch rows count API by @EpicStep in https://github.com/ClickHouse/clickhouse-go/pull/1063
+* Implement release connection in batch by @EpicStep in https://github.com/ClickHouse/clickhouse-go/pull/1062
+### Other Changes 🛠
+* Restore test against CH 23.7 by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/1059
+
+## New Contributors
+* @ValManP made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1051
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.12.1...v2.13.0
+
+# v2.12.1, 2023-08-02 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Fixes 🐛
+* Fix InsertAsync typo in docs  by @et in https://github.com/ClickHouse/clickhouse-go/pull/1044
+* Fix panic and releasing in batch column by @EpicStep in https://github.com/ClickHouse/clickhouse-go/pull/1055
+* Docs/changelog fixes by @jmaicher in https://github.com/ClickHouse/clickhouse-go/pull/1046
+* Clarify error message re custom serializaion support by @RoryCrispin in https://github.com/ClickHouse/clickhouse-go/pull/1056
+* Fix send query on batch retry by @EpicStep in https://github.com/ClickHouse/clickhouse-go/pull/1045
+### Other Changes 🛠
+* Update ClickHouse versions by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/1054
+
+## New Contributors
+* @et made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1044
+* @EpicStep made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1055
+* @jmaicher made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1046
+* @RoryCrispin made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1056
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.12.0...v2.12.1
+
+# v2.12.0, 2023-07-27 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Enhancements 🎉
+* Implement elapsed time in query progress by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/1039
+### Fixes 🐛
+* Release connection slot on connection acquire timeout by @sentanos in https://github.com/ClickHouse/clickhouse-go/pull/1042
+
+## New Contributors
+* @sentanos made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1042
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.11.0...v2.12.0
+
+# v2.11.0, 2023-07-20 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Enhancements 🎉
+* Retry for batch API by @djosephsen in https://github.com/ClickHouse/clickhouse-go/pull/941
+### Fixes 🐛
+* Fix startAutoCloseIdleConnections cause goroutine leak by @YenchangChan in https://github.com/ClickHouse/clickhouse-go/pull/1011
+* Fix netip.Addr pointer panic by @anjmao in https://github.com/ClickHouse/clickhouse-go/pull/1029
+### Other Changes 🛠
+* Git actions terraform by @gingerwizard in https://github.com/ClickHouse/clickhouse-go/pull/1023
+
+## New Contributors
+* @YenchangChan made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1011
+* @djosephsen made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/941
+* @anjmao made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1029
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.10.1...v2.11.0
+
+# v2.10.1, 2023-06-06 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Other Changes 🛠
+* Update outdated README.md by @kokizzu in https://github.com/ClickHouse/clickhouse-go/pull/1006
+* Remove incorrect usage of KeepAlive in DialContext by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/1009
+
+## New Contributors
+* @kokizzu made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/1006
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.10.0...v2.10.1
+
+# v2.10.0, 2023-05-17 <!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### Enhancements 🎉
+* Support [16]byte/[]byte typed scan/append for IPv6 column by @crisismaple in https://github.com/ClickHouse/clickhouse-go/pull/996
+* Add custom dialer option to http protocol by @stephaniehingtgen in https://github.com/ClickHouse/clickhouse-go/pull/998
+### Fixes 🐛
+* Tuple scan respects both value and pointer variable by @crisismaple in https://github.com/ClickHouse/clickhouse-go/pull/971
+* Auto close idle connections in native protocol in respect of ConnMaxLifetime option by @jkaflik in https://github.com/ClickHouse/clickhouse-go/pull/999
+
+## New Contributors
+* @stephaniehingtgen made their first contribution in https://github.com/ClickHouse/clickhouse-go/pull/998
+
+**Full Changelog**: https://github.com/ClickHouse/clickhouse-go/compare/v2.9.3...v2.10.0
+
 # v2.9.2, 2023-05-08 <!-- Release notes generated using configuration in .github/release.yml at main -->
 
 ## What's Changed
